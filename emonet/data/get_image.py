@@ -6,12 +6,12 @@ from pathlib import Path
 import os
 
 class Images(Dataset):
-    def __init__(self, folder_name, transformations, path= '/emonet/data/videos/'):
+    def __init__(self, folder_name, transformations, downsample=10, path= '/emonet/data/videos/'):
 
         self.path = os.getcwd() + path + folder_name + '/'
         files = [f for f in listdir(self.path)]
         self.down_selected = []
-        for i in range(0, len(files), 10):
+        for i in range(0, len(files), downsample):
             self.down_selected.append(self.path + files[i])
 
         self.transforms = transformations

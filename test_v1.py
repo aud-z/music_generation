@@ -15,17 +15,20 @@ from emonet.data import Images
 from emonet.metrics import CCC, PCC, RMSE, SAGR, ACC
 from emonet.evaluation import evaluate, evaluate_flip
 
+import matplotlib.pyplot as plt
+
 torch.backends.cudnn.benchmark =  True
 
 
 #Parse arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--nclasses', type=int, default=8, choices=[5,8], help='Number of emotional classes to test the model on. Please use 5 or 8.')
+#parser.add_argument('--nclasses', type=int, default=8, choices=[5,8], help='Number of emotional classes to test the model on. Please use 5 or 8.')
 parser.add_argument('--folder', type=str, help='Name of video folder to run model on.')
+parser.add_argument('--downsample', type=int, help='Down-sample input images by taking every nth image')
 args = parser.parse_args()
 
 # Parameters of the experiments
-n_expression = args.nclasses
+n_expression = 8
 batch_size = 2
 n_workers = 0
 device = 'cuda:0'
@@ -47,7 +50,7 @@ print('Loading the data')
 # test_dataset_no_flip = AffectNet(root_path='~/datasets/new_affectnet/', subset=subset, n_expression=n_expression,
 #                          transform_image_shape=transform_image_shape_no_flip, transform_image=transform_image)
 
-test_dataset_no_flip = Images(folder_name=args.folder, transformations=transform_image)
+test_dataset_no_flip = Images(folder_name=args.folder, downsample = args.downsample, transformations=transform_image)
 
 # test_dataset_flip = AffectNet(root_path='~/datasets/new_affectnet/', subset=subset, n_expression=n_expression,
 #                          transform_image_shape=transform_image_shape_flip, transform_image=transform_image)
@@ -67,9 +70,16 @@ net.load_state_dict(state_dict, strict=False)
 net.eval()
 
 
-print(f'Testing on {subset}-set')
+print(f'Predicting valence and arousal')
 print(f'------------------------')
 #evaluate_flip(net, test_dataloader_no_flip, test_dataloader_flip, device=device, metrics_valence_arousal=metrics_valence_arousal, metrics_expression=metrics_expression)
 valence, arousal = evaluate(net, test_dataloader_no_flip, device=device, metrics_valence_arousal=None, metrics_expression=None)
 
+print(f'Saving results')
+np.savetxt('./results/' + args.folder + '_valence.csv', valence, delimiter = ',')
+np.savetxt('./results/' + args.folder + '_arousal.csv', arousal, delimiter = ',')
 
+
+# fig, ax = plt.subplots()
+# ax = plt.scatter(valence, arousal)
+# plt.show()

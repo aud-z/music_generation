@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+import matplotlib.pyplot as plt
 
 def evaluate_metrics(ground_truth, predictions, metrics, verbose=True, print_tex=True):
     results = {}
@@ -44,7 +45,6 @@ def evaluate(net, dataloader, device, metrics_valence_arousal=None, metrics_expr
         ar = np.squeeze(ar.cpu().numpy())
 
         if index:
-            #if metrics_valence_arousal is not None:
             valence_pred = np.concatenate([val, valence_pred])
             arousal_pred = np.concatenate([ar,  arousal_pred])
                 # valence_gts = np.concatenate([valence, valence_gts])
@@ -101,6 +101,8 @@ def evaluate(net, dataloader, device, metrics_valence_arousal=None, metrics_expr
     #         return valence_results, arousal_results
 
     # return predicted instead @AZ
+    # plt.scatter(valence_pred, arousal_pred)
+    # plt.show()
     return valence_pred, arousal_pred
 
 def evaluate_flip(net, dataloader_no_flip, dataloader_flip, device, metrics_valence_arousal=None, metrics_expression=None, metrics_au=None, verbose=True, print_tex=False):
