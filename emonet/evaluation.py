@@ -44,7 +44,11 @@ def evaluate(net, dataloader, device, metrics_valence_arousal=None, metrics_expr
         val = np.squeeze(val.cpu().numpy())
         ar = np.squeeze(ar.cpu().numpy())
 
+
         if index:
+            if val.ndim == 0:
+                val = np.array([val])
+                ar = np.array([ar])
             valence_pred = np.concatenate([val, valence_pred])
             arousal_pred = np.concatenate([ar,  arousal_pred])
                 # valence_gts = np.concatenate([valence, valence_gts])
