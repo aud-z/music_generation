@@ -6,6 +6,7 @@ Image-to-emotion generation uses EMONET, with code adapted from Github repositor
 
 Emotion-to-music generation uses EMOPIA, with code adapted from the Github repository for the paper _"EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation"_, by authors Hsiao-Tzu Hung, Joann Ching, Seungheon Doh, Nabin Kim, Juhan Nam, Yi-Hsuan Yang. [[2]](#Citation).
 
+## Citation 
 
 [1] "Estimation of continuous valence and arousal levels from faces in naturalistic conditions", Antoine Toisoul, Jean Kossaifi, Adrian Bulat, Georgios Tzimiropoulos and Maja Pantic, published in Nature Machine Intelligence, January 2021
 
