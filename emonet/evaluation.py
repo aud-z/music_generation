@@ -103,10 +103,6 @@ def evaluate(net, dataloader, device, metrics_valence_arousal=None, metrics_expr
     #         return acc_expressions
     # else:
     #         return valence_results, arousal_results
-
-    # return predicted instead @AZ
-    # plt.scatter(valence_pred, arousal_pred)
-    # plt.show()
     return valence_pred, arousal_pred
 
 def evaluate_flip(net, dataloader_no_flip, dataloader_flip, device, metrics_valence_arousal=None, metrics_expression=None, metrics_au=None, verbose=True, print_tex=False):
